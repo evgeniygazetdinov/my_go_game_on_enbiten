@@ -6,7 +6,6 @@ import (
 
 	bt "github.com/SakoDroid/telego"
 	cfg "github.com/SakoDroid/telego/configs"
-	//	objs "github.com/SakoDroid/telego/objects"
 	"reflect"
 )
 
@@ -15,11 +14,7 @@ const token string = "478565486:AAGyN1ey0LDTybgGlgdlZBeC3Bu73BMMxx0"
 //The instance of the bot.
 var bot *bt.Bot
 
-func getPreferences(update *objects.Update) {
-	chatId := update.Message.Chat.Id
-	messageId := update.Message.MessageId
-	return chatId, messageId
-}
+
 
 func main() {
 	up := cfg.DefaultUpdateConfigs()
@@ -55,12 +50,23 @@ func start() {
 	messageChannel, _ := bot.AdvancedMode().RegisterChannel("", "message")
 
 	for {
-
 		//Wait for updates
 		up := <-*messageChannel
+		fmt.Println(reflect.TypeOf(up))
 
 		if up.Message.Text == "rust" {
+			_, err := bot.SendMessage(up.Message.Chat.Id, "hi to you too, send me a location", "", up.Message.MessageId, false,false)
+			if err != nil {
+				fmt.Println(err)
+			}
 
 		}
 	}
 }
+
+	
+// func getPreferences(update *objects.Update) (string, string) {
+// 	chatId := update.Message.Chat.Id
+// 	messageId := update.Message.MessageId
+// 	return chatId, messageId
+// }
