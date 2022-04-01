@@ -6,15 +6,28 @@ import (
 
 	bt "github.com/SakoDroid/telego"
 	cfg "github.com/SakoDroid/telego/configs"
-	"reflect"
+	objs "github.com/SakoDroid/telego/objects"
+	// "reflect"
 )
 
 const token string = "478565486:AAGyN1ey0LDTybgGlgdlZBeC3Bu73BMMxx0"
 
+const relocate_group string = "-1001619080966"
+const tractor_group string = "-1001212511273"
+
 //The instance of the bot.
 var bot *bt.Bot
 
+func getUpdatesFromChannels(){
+	fmt.Println("get updates")
+}
 
+func getPreferences(update *objs.Update) (int, int) {
+	chatId := update.Message.Chat.Id
+	messageId := update.Message.MessageId
+	return chatId, messageId
+}
+//TODO find how getUpdates from channels
 
 func main() {
 	up := cfg.DefaultUpdateConfigs()
@@ -46,27 +59,25 @@ func main() {
 
 }
 func start() {
+	
 	//Register the channel
 	messageChannel, _ := bot.AdvancedMode().RegisterChannel("", "message")
-
+	
 	for {
 		//Wait for updates
 		up := <-*messageChannel
-		fmt.Println(reflect.TypeOf(up))
-
-		if up.Message.Text == "rust" {
-			_, err := bot.SendMessage(up.Message.Chat.Id, "hi to you too, send me a location", "", up.Message.MessageId, false,false)
+		// kip_up := <-*kiprChannel
+		// fmt.Println(reflect.TypeOf(kip_up))
+		// getUpdatesFromChannels()
+		// if up.Message.Text == "rust" {
+			_, err := bot.SendMessage(up.Message.Chat.Id, "f", "", up.Message.MessageId, false,false)
+			
 			if err != nil {
 				fmt.Println(err)
 			}
 
 		}
 	}
-}
+// }
 
 	
-// func getPreferences(update *objects.Update) (string, string) {
-// 	chatId := update.Message.Chat.Id
-// 	messageId := update.Message.MessageId
-// 	return chatId, messageId
-// }
