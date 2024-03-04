@@ -5,5 +5,5 @@ go  run main.go
 
 ## install dep
 export GO111MODULE=off<br>
-export GOBIN=/home/ YOUR PATH TO PROJECT FOLDER /bin
-go get -u github.com/go-telegram-bot-api/telegram-bot-api/v5
+sudo apt install libc6-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config
+go run github.com/hajimehoshi/ebiten/v2/examples/rotate@latest
