@@ -1,4 +1,4 @@
-# TELEGRAMM it work parser
+# go game based on ebiten engine
 
 ## for work
 go  run main.go
