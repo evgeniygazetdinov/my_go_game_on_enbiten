@@ -24,6 +24,8 @@ const (
 	frameWidth         = 32
 	frameHeight        = 32
 	frameCount         = 8
+	w                  = screenWidth
+	h                  = screenHeight
 )
 
 var (
@@ -32,6 +34,7 @@ var (
 	background  *ebiten.Image
 	spaceShip   *ebiten.Image
 	playerOne   player
+	op          *ebiten.DrawImageOptions
 )
 
 type Position struct {
@@ -93,7 +96,7 @@ func init() {
 	// 	log.Fatal(err)
 	// }
 
-	playerOne = player{runnerImage, screenWidth / 6.0, screenHeight / 6.0, 4}
+	playerOne = player{runnerImage, screenWidth / 6.0, screenHeight / 6.0, 4, 0}
 }
 
 func movePlayer() {
@@ -105,26 +108,30 @@ func movePlayer() {
 		playerOne.yPos += playerOne.speed
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		playerOne.xPos -= playerOne.speed
+		// playerOne.xPos -= playerOne.speed
 		fmt.Println("left")
-		player.count += 7
+		playerOne.count += 3
+		// playerOne.yPos += 100
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		playerOne.xPos += playerOne.speed
+		playerOne.xPos += 1.0
 		fmt.Println("right")
-		player.count += 7
+		fmt.Println(playerOne.xPos)
+		playerOne.count += 3
 	}
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(-float64(frameWidth)/2, -float64(frameHeight)/2)
-	op.GeoM.Translate(screenWidth/2, screenHeight/2)
-	i := (player.count / 5) % frameCount
+	op.GeoM.Translate(screenWidth/3, screenHeight/3)
+	i := (playerOne.count / 5) % frameCount
 	sx, sy := frameOX+i*frameWidth, frameOY
-	screen.DrawImage(runnerImage.SubImage(image.Rect(sx, sy, sx+frameWidth, sy+frameHeight)).(*ebiten.Image), op)
+	screen.DrawImage(playerOne.image.SubImage(image.Rect(sx, sy, sx+frameWidth, sy+frameHeight)).(*ebiten.Image), op)
+	op.GeoM.Translate(screenWidth/3, screenHeight/3)
 
 	vector.DrawFilledRect(screen, float32(10), float32(15), gridSize, gridSize, color.RGBA{0x80, 0xa0, 0xc0, 0xff}, false)
+
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -176,7 +183,7 @@ func main() {
 // 	// 	log.Fatal(err)
 // 	// }
 
-// 	spaceShip, _, err = ebitenutil.NewImageFromFile("assets/1.png", ebiten.FilterDefault)
+// 	spaceShip, _, err = ebitenutil.NewImageFromFile("1.png", ebiten.FilterDefault)
 // 	if err != nil {
 // 		log.Fatal(err)
 // 	}
