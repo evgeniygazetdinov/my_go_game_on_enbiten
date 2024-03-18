@@ -128,7 +128,6 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	i := (playerOne.count / 5) % frameCount
 	sx, sy := frameOX+i*frameWidth, frameOY
 	screen.DrawImage(playerOne.image.SubImage(image.Rect(sx, sy, sx+frameWidth, sy+frameHeight)).(*ebiten.Image), op)
-	op.GeoM.Translate(screenWidth/3, screenHeight/3)
 
 	vector.DrawFilledRect(screen, float32(10), float32(15), gridSize, gridSize, color.RGBA{0x80, 0xa0, 0xc0, 0xff}, false)
 
